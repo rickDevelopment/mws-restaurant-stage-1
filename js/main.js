@@ -186,7 +186,7 @@ createRestaurantHTML = (restaurant) => {
     window.location = url;
   }
   li.append(more)
-  console.log(restaurant)
+  //console.log(restaurant)
 
   return li
 }
@@ -228,3 +228,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+
+
+

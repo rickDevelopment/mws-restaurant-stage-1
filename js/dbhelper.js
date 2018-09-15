@@ -1,3 +1,5 @@
+
+
 /**
  * Common database helper functions.
  */
@@ -8,14 +10,46 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8000 // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/restaurants`;
   }
 
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
+    let url = DBHelper.DATABASE_URL;
+    fetch(url)
+    .then(response =>{
+      if(!response.ok){
+        throw Error(`There was a error fetching data:${response.statusText}`)
+      }
+      return response.json();
+    })
+    .then(restaurants =>{
+      //Create Transaction for restaurant-idb to add to the database
+
+    DBHelper.dbPromise.then(function(db){
+      const tx = db.transaction('restaurants','readwrite');
+      const restaurantStore = tx.objectStore('restaurants');
+      console.log(' restaurant transaction created')
+      //loop through the restaurants and add them to restaurant store
+      for(const restaurant of restaurants){
+        console.log('adding restaurants to indexedDB')
+        restaurantStore.put(restaurant)    
+    }
+    return tx.complete;
+  }).then(function(){
+    console.log('added item to the restaurantStore')
+  })
+
+      return callback(null,restaurants)
+    })
+    .catch(error => console.log(`A error as occured: ${error}`));
+  }
+    /*
+    ===Old xhr request that was replaced by the fetch above===
+
     let xhr = new XMLHttpRequest();
     xhr.open('GET', DBHelper.DATABASE_URL);
     xhr.onload = () => {
@@ -29,7 +63,7 @@ class DBHelper {
       }
     };
     xhr.send();
-  }
+    */
 
   /**
    * Fetch a restaurant by its ID.
@@ -150,7 +184,10 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    if(!restaurant.photograph){
+      restaurant.photograph = '10';
+    }
+    return (`/img/${restaurant.photograph}.jpg`);
   }
 
   /**
@@ -177,5 +214,33 @@ class DBHelper {
     return marker;
   } */
 
+  // Create indexDB database to cache response\\
+ 
+  /*=================INDEXED DB ==========================*/
+  //create indexedDb database to store restaurants
+  static get dbPromise(){
+    const dbPromise = idb.open('restaurant-idb', 1, function(upgradeDb){
+      switch(upgradeDb.oldVersion){
+        case 0:
+        //create restaurant object store
+        let restaurantStore = upgradeDb.createObjectStore('restaurants' , {keyPath:'id'});
+       console.log('Restaurant object store created')
+       //create ID index
+      } 
+    } )
+    return dbPromise
+  }
 }
+  //Create Transaction for restaurant-idb to add to the database
 
+// let myrestaurants = 
+// console.log(`This is the fetch ${}`)
+
+//get all cached items from the database
+dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readonly');
+  var store = tx.objectStore('store');
+  return store.getAll();
+}).then(function(items) {
+  console.log('Items by name:', items);
+});
