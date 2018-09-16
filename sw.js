@@ -47,3 +47,17 @@ self.addEventListener('fetch', function(event) {
     )
   );
 });
+//delete old cache in the activate event
+self.addEventListener('activate', function(event){
+  event.waitUntil(
+    caches.keys().then(function(cacheNames){
+      return Promise.all(
+        cacheNames.filter(function(cacheName){
+          return cacheName.startsWith('mws-') && cacheName != CACHE_NAME
+        }).map(function(cacheName){
+          return caches.delete(cacheName)
+        })
+      )
+    })
+  )
+})
