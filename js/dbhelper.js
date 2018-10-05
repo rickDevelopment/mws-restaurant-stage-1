@@ -11,8 +11,38 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}/restaurants/`;
   }
+  
+  /*URL to fetch reviews*/
+  
+  static get REVIEWS_URL(){
+    const port = 1337
+    return `http://localhost:${port}/reviews`;
+  }
+
+  /* 
+  *Fetch all reviews
+  */
+ static fetchReviews(callback){
+   let rurl = DBHelper.REVIEWS_URL;
+   fetch(rurl)
+   .then( response =>{
+     if(!response.ok){
+       throw Error(`There was a error fetching reviews data: ${response.statusText}`)
+     }
+     return response.json();
+   })
+   .then(reviews =>{
+     
+      for(const review of reviews){
+        console.log(`fetched review: ${review}`)
+      }
+      return callback(null,reviews)
+   })
+   .catch(error => console.log(`A error has occured: ${error}`));
+ }
+
 
   /**
    * Fetch all restaurants.
@@ -173,6 +203,18 @@ class DBHelper {
     });
   }
 
+  /* Fetch restaurant reviews*/
+
+  static fetchReview(callback){
+    DBHelper.fetchReviews((error,reviews) =>{
+      if (error){
+        callback(error,null)
+      } else{
+        console.log(reviews)
+      }
+    })
+  }
+
   /**
    * Restaurant page URL.
    */
@@ -231,16 +273,20 @@ class DBHelper {
     return dbPromise
   }
 }
+
+
   //Create Transaction for restaurant-idb to add to the database
 
 // let myrestaurants = 
 // console.log(`This is the fetch ${}`)
 
 //get all cached items from the database
+
+/*
 dbPromise.then(function(db) {
   var tx = db.transaction('store', 'readonly');
   var store = tx.objectStore('store');
   return store.getAll();
 }).then(function(items) {
   console.log('Items by name:', items);
-});
+});*/
