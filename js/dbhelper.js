@@ -18,7 +18,7 @@ class DBHelper {
   
   static get REVIEWS_URL(){
     const port = 1337
-    return `http://localhost:${port}/reviews`;
+    return `http://localhost:${port}/reviews/`;
   }
 
   /* 
@@ -34,11 +34,8 @@ class DBHelper {
      return response.json();
    })
    .then(reviews =>{
-     
-      for(const review of reviews){
-        console.log(`fetched review: ${review}`)
-      }
-      return callback(null,reviews)
+     console.log(`fetched reviews`)
+      return callback(null, reviews)
    })
    .catch(error => console.log(`A error has occured: ${error}`));
  }
@@ -109,6 +106,24 @@ class DBHelper {
           callback(null, restaurant);
         } else { // Restaurant does not exist in the database
           callback('Restaurant does not exist', null);
+        }
+      }
+    });
+  }
+  /**
+   * Fetch a reviews by its ID.
+   */
+  static fetchReviewById(id,callback){
+        // fetch all reviews with proper error handling
+    DBHelper.fetchReviews((error, reviews) =>{      
+      if (error){
+        callback(error,null)
+      } else {
+        const review = reviews.find(r => r.id == id);
+        if(review){
+          callback(null,review);
+        } else{
+          callback('Review does not exist', null)
         }
       }
     });
@@ -206,6 +221,7 @@ class DBHelper {
   /* Fetch restaurant reviews*/
 
   static fetchReview(callback){
+    //fetch all reviews
     DBHelper.fetchReviews((error,reviews) =>{
       if (error){
         callback(error,null)
@@ -273,7 +289,8 @@ class DBHelper {
     return dbPromise
   }
 }
-
+// Test review funcitons
+DBHelper.fetchReview()
 
   //Create Transaction for restaurant-idb to add to the database
 
