@@ -24,7 +24,7 @@ class DBHelper {
   /* 
   *Fetch all reviews
   */
- static fetchReviews(){
+ static fetchReviews(callback){
    let rurl = DBHelper.REVIEWS_URL;
    fetch(rurl)
    .then( response =>{
@@ -35,7 +35,7 @@ class DBHelper {
    })
    .then(reviews =>{
      console.log(`fetched reviews`)
-      return reviews
+      return callback(null, reviews)
    })
    .catch(error => console.log(`A error has occured: ${error}`));
  }
