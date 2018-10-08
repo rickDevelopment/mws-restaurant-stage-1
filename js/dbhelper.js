@@ -24,7 +24,7 @@ class DBHelper {
   /* 
   *Fetch all reviews
   */
- static fetchReviews(callback){
+ static fetchReviews(){
    let rurl = DBHelper.REVIEWS_URL;
    fetch(rurl)
    .then( response =>{
@@ -35,7 +35,7 @@ class DBHelper {
    })
    .then(reviews =>{
      console.log(`fetched reviews`)
-      return callback(null, reviews)
+      return reviews
    })
    .catch(error => console.log(`A error has occured: ${error}`));
  }
@@ -220,7 +220,7 @@ class DBHelper {
 
   /* Fetch restaurant reviews*/
 
-  static fetchReview(callback){
+  /*static fetchReview(callback){
     //fetch all reviews
     DBHelper.fetchReviews((error,reviews) =>{
       if (error){
@@ -230,7 +230,7 @@ class DBHelper {
       }
     })
   }
-
+*/
   /**
    * Restaurant page URL.
    */
@@ -290,7 +290,6 @@ class DBHelper {
   }
 }
 // Test review funcitons
-DBHelper.fetchReview()
 
   //Create Transaction for restaurant-idb to add to the database
 

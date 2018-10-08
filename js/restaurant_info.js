@@ -1,6 +1,8 @@
 let restaurant;
+let reviews
 var newMap;
 
+console.log(DBHelper)
 /**
  * Initialize map as soon as the page is loaded.
  */
@@ -125,7 +127,9 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (reviews = self.fetchReview) => {
+  console.log(reviews)
+  debugger
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h2');
   title.innerHTML = 'Reviews';
@@ -205,3 +209,5 @@ getParameterByName = (name, url) => {
 //     });
 //   });
 // }
+
+DBHelper.fetchReviews()
