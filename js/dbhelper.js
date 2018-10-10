@@ -24,21 +24,21 @@ class DBHelper {
   /* 
   *Fetch all reviews
   */
- static fetchReviews(callback){
-   let rurl = DBHelper.REVIEWS_URL;
-   fetch(rurl)
-   .then( response =>{
-     if(!response.ok){
-       throw Error(`There was a error fetching reviews data: ${response.statusText}`)
-     }
-     return response.json();
-   })
-   .then(reviews =>{
-     console.log(`fetched reviews`)
-      return callback(null, reviews)
-   })
-   .catch(error => console.log(`A error has occured: ${error}`));
- }
+ static fetchRestaurantReviews(callback){
+  let rurl = DBHelper.REVIEWS_URL
+  fetch(rurl)
+  .then( response =>{
+    if(!response.ok){
+      throw Error(`There was a error fetching reviews data: ${response.statusText}`)
+    }
+    return response.json();
+  })
+  .then(reviews =>{
+    console.log('These are the fetched reviews ',reviews);
+    return callback(null,reviews)   
+  })
+  .catch(error => console.log(`A error has occured: ${error}`));
+}
 
 
   /**
@@ -69,7 +69,6 @@ class DBHelper {
   }).then(function(){
     console.log('added item to the restaurantStore')
   })
-
       return callback(null,restaurants)
     })
     .catch(error => console.log(`A error as occured: ${error}`));
@@ -115,7 +114,7 @@ class DBHelper {
    */
   static fetchReviewById(id,callback){
         // fetch all reviews with proper error handling
-    DBHelper.fetchReviews((error, reviews) =>{      
+    DBHelper.fetchRestaurantReviews((error, reviews) =>{      
       if (error){
         callback(error,null)
       } else {
@@ -220,17 +219,18 @@ class DBHelper {
 
   /* Fetch restaurant reviews*/
 
-  /*static fetchReview(callback){
+  static fetchReview(callback){
     //fetch all reviews
-    DBHelper.fetchReviews((error,reviews) =>{
+    DBHelper.fetchRestaurantReviews((error,reviews) =>{
       if (error){
         callback(error,null)
       } else{
         console.log(reviews)
+        return reviews
       }
     })
   }
-*/
+
   /**
    * Restaurant page URL.
    */
