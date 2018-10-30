@@ -83,7 +83,12 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
-
+// create favourite button
+  const favorite = document.createElement('button');
+  favorite.className = 'favorite-btn'
+  favorite.setAttribute('alt', 'favorite button')
+  favorite.innerHTML ='favorite'
+// END favourite  button
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
@@ -143,7 +148,7 @@ fillReviewsHTML = (reviews) => {
   }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
-  //match restaurant with review id
+  //match restaurant with review id before displaying review
      if ( self.restaurant.id === review.restaurant_id){
        ul.appendChild(createReviewHTML(review));
      }

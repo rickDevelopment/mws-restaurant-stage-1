@@ -24,9 +24,9 @@ class DBHelper {
   /* 
   *Fetch all reviews
   */
- static fetchRestaurantReviews(callback){
+ static fetchReviews(callback){
   let rurl = DBHelper.REVIEWS_URL
-  fetch(rurl)
+  return fetch(rurl)
   .then( response =>{
     if(!response.ok){
       throw Error(`There was a error fetching reviews data: ${response.statusText}`)
@@ -35,7 +35,7 @@ class DBHelper {
   })
   .then(reviews =>{
     console.log('These are the fetched reviews ',reviews);
-    return callback(null,reviews)   
+    return reviews;
   })
   .catch(error => console.log(`A error has occured: ${error}`));
 }
@@ -46,32 +46,29 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     let url = DBHelper.DATABASE_URL;
-    fetch(url)
-    .then(response =>{
-      if(!response.ok){
+    fetch(url).then(response => {
+      if(!response.ok) {
         throw Error(`There was a error fetching data:${response.statusText}`)
       }
       return response.json();
-    })
-    .then(restaurants =>{
+    }).then(restaurants => {
       //Create Transaction for restaurant-idb to add to the database
-
-    DBHelper.dbPromise.then(function(db){
-      const tx = db.transaction('restaurants','readwrite');
-      const restaurantStore = tx.objectStore('restaurants');
-      console.log(' restaurant transaction created')
-      //loop through the restaurants and add them to restaurant store
-      for(const restaurant of restaurants){
-        console.log('adding restaurants to indexedDB')
-        restaurantStore.put(restaurant)    
-    }
-    return tx.complete;
-  }).then(function(){
-    console.log('added item to the restaurantStore')
-  })
-      return callback(null,restaurants)
-    })
-    .catch(error => console.log(`A error as occured: ${error}`));
+      if(restaurants) {
+        DBHelper.dbPromise.then(function(db){
+          const tx = db.transaction('restaurants','readwrite');
+          const restaurantStore = tx.objectStore('restaurants');
+          console.log(' restaurant transaction created')
+          //loop through the restaurants and add them to restaurant store
+          for(const restaurant of restaurants){
+            console.log('adding restaurants to indexedDB');
+            restaurantStore.put(restaurant);
+          }
+        console.log('added item to the restaurantStore')
+        callback(null,restaurants)
+        return tx.complete;
+        });
+      };
+    }).catch(error => console.log(`A error as occured: ${error}`))
   }
     /*
     ===Old xhr request that was replaced by the fetch above===

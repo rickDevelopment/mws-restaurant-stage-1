@@ -165,7 +165,7 @@ createRestaurantHTML = (restaurant) => {
   image.setAttribute("alt", `Picture of ${restaurant.name} restaurant`)
   pics.innerHTML = image;
   li.append(image);
-
+//populate restaurant  name
   const name = document.createElement('h3');
   name.innerHTML = restaurant.name;
   li.append(name);
