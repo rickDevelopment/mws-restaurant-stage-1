@@ -2,10 +2,6 @@ let restaurant;
 let reviews
 var newMap;
 
-//reviews = DBHelper.fetchReviewById()
-
-
-//console.log('reviews:', reviews);
 /**
  * Initialize map as soon as the page is loaded.
  */
@@ -104,7 +100,10 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  fillReviewsHTML();
+  DBHelper.fetchReviews().then(reviews => {
+    console.log('test reviews:', reviews[0]['comments']);
+    fillReviewsHTML(reviews);    
+  });
 }
 
 /**
@@ -130,8 +129,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = DBHelper.fetchReview()) => {
-  debugger
+fillReviewsHTML = (reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h2');
   title.innerHTML = 'Reviews';
@@ -145,8 +143,11 @@ fillReviewsHTML = (reviews = DBHelper.fetchReview()) => {
   }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
-  });
+  //match restaurant with review id
+     if ( self.restaurant.id === review.restaurant_id){
+       ul.appendChild(createReviewHTML(review));
+     }
+    });
   container.appendChild(ul);
 }
 
@@ -160,7 +161,12 @@ createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  // get time
+  const time = review.updatedAt
+  //format the time to be readiable
+  
+  var prettyTime = new Date(time).toLocaleDateString("en-US")
+  date.innerHTML = prettyTime;
   li.appendChild(date);
 
   const rating = document.createElement('p');
@@ -211,4 +217,3 @@ getParameterByName = (name, url) => {
 //     });
 //   });
 // }
-
