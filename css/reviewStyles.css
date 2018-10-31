@@ -6,7 +6,11 @@
 img, embed, video, object{
   max-width: 100%;
 }
-nav a, button{
+nav a, {
+  min-width: 48px;
+  min-height: 48px;
+}
+button{
   min-width: 48px;
   min-height: 48px;
 }
@@ -15,6 +19,9 @@ nav a, button{
   width: 100%;
   margin: 0;
   padding: 0;
+}
+.main-content{
+  margin:2px
 }
 /*==============Skip Link===============*/
 
@@ -74,9 +81,14 @@ li,p, #footer, #restaurant-hours td{
 /*======================Restaurant hours table===========*/
 table#restaurant-hours {
   width: 100%;
+  
 }
 #restaurant-address {
-  font-size: 1.2em;
+  font-size: 1.3em;
+  text-align: end;
+  width: 65%;
+  font-weight: bold;
+  color: #ff8400;
 }
 
 /*=======================Restaurant Review==========*/
@@ -160,3 +172,22 @@ table#restaurant-hours {
   }
 
 }
+
+/*=====================Favorite button==========*/
+
+button, .favorite-btn{
+  width: 15%;
+  color: #ffff;
+  font-size: 1.3em;
+  background-color: #f18a23;
+  font-weight: bold;
+  /* margin: auto; */
+  font-style: italic;
+ }
+
+ .favorite-btns{
+   min-width: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+ }
