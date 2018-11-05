@@ -16,9 +16,36 @@
       <label for="name" >Name: <abbr title="required">*</abbr></label>
       <input type="text" name="name" id="name" value="enter your name" name="user_name" autofocus="true">
     </div>
-    <div class="review-frm">
-      <label for="review">Review: <abbr title="required">*</abbr></label>
-      <textarea name="user_comment" id="review" >Add your review here</textarea>
+    <div class="rating-frm">
+      <fieldset>
+        <legend>Enter your rating:</legend>
+          <ul>
+            <li>
+              <label for="1">1</label>
+              <input type="radio" checked id="1" name="rating" value="1">
+            </li>
+            <li>
+              <label for="2">2</label>
+              <input type="radio" checked id="2" name="rating" value="2">
+            </li>
+            <li>
+              <label for="3">3</label>
+              <input type="radio" checked id="3" name="rating" value="3">
+            </li>
+            <li>
+              <label for="4">4</label>
+              <input type="radio" checked id="4" name="rating" value="4">
+            </li>
+            <li><label for="5">5</label>
+              <input type="radio" checked id="5" name="rating" value="5">
+            </li>
+          </ul>
+      </fieldset>
+      <label for="rating">Rating:<abbr title="required">*</abbr></label>
+    </div>
+    <div class="comments-frm">
+      <label for="comments">Comments: <abbr title="required">*</abbr></label>
+      <textarea name="user_comment" id="comments" >Add your comments here</textarea>
     </div>
     <div class= "submit-btn">
       <button type="submit">Submit</button>
