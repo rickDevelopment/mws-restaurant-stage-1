@@ -86,9 +86,10 @@ table#restaurant-hours {
 #restaurant-address {
   font-size: 1.3em;
   text-align: end;
-  width: 65%;
+  width: 67%;
   font-weight: bold;
   color: #ff8400;
+  margin: 24px 0px;
 }
 
 /*=======================Restaurant Review==========*/
@@ -174,20 +175,23 @@ table#restaurant-hours {
 }
 
 /*=====================Favorite button==========*/
+.favorite-btns{
+ min-width: 48px;
+ width: 100%;
+ display: flex;
+ justify-content: center;
+}
 
 button, .favorite-btn{
-  width: 15%;
-  color: #ffff;
-  font-size: 1.3em;
-  background-color: #f18a23;
-  font-weight: bold;
-  /* margin: auto; */
-  font-style: italic;
+     /* width: 15%; */
+     color: #ffff;
+     font-size: 1.3em;
+     background-color: #f18a23;
+     font-weight: bold;
+     /* margin: auto; */
+     font-style: italic;
  }
-
- .favorite-btns{
-   min-width: 48px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
- }
+/* On mouse-over */
+.favorite-btn:hover {
+  background:#bf6307;
+}

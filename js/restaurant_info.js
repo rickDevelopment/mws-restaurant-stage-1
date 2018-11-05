@@ -87,7 +87,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const favorite = document.getElementById('favorite-button');
   favorite.className = 'favorite-btn'
   favorite.setAttribute('alt', 'favorite button')
-  favorite.innerHTML ='favorite &#x2606'
+  favorite.setAttribute('type', 'button')
+  favorite.innerHTML ='Favorite &#x2606'
   
 // END favourite  button
   const address = document.getElementById('restaurant-address');
