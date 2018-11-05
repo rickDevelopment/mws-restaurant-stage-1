@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/formStyles.css">
+  <title>Review Form</title>
+</head>
+<body>
+  
+  <form 
+  action="/my-handling-form-page" method="POST">
+  <p>Required fields are followed by <abbr title="required">*</abbr>.</p>
+    <div class="name-frm">
+      <label for="name" >Name: <abbr title="required">*</abbr></label>
+      <input type="text" name="name" id="name" value="enter your name" name="user_name" autofocus="true">
+    </div>
+    <div class="review-frm">
+      <label for="review">Review: <abbr title="required">*</abbr></label>
+      <textarea name="user_comment" id="review" >Add your review here</textarea>
+    </div>
+    <div class= "submit-btn">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</body>
+</html>
