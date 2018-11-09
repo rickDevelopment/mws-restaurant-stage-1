@@ -93,24 +93,34 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   //toggle favorite
   favorite.onclick = toggle
   let clicked = false;
-  //function to toggle between when the favorite button is clicked.
+  /*function to toggle between when the favorite button is clicked.
+  change the button color and update the is_favorite value "true/false"
+  */
   function toggle(event){
     if(clicked === false){
       favorite.style.backgroundColor= "red"
+      setFav(favURL)
       clicked =true;
     }else{
       favorite.style.backgroundColor= ""
+      setFav(unFavURL)
       clicked= false;
     }
   } 
-  function postData(url, data){
-    return fetch(url, {
-      method: POST,
-      body:JSON.stringify(data),
-      headers
-    });
+  //url for favorite and unfavorite
+const favURL = `http://localhost:1337/restaurants/${self.restaurant.id}/?is_favorite=true`
 
-  }
+const unFavURL = `http://localhost:1337/restaurants/${self.restaurant.id}/?is_favorite=false`
+
+//update the is_favorite key
+function setFav(url){
+  fetch(url,{
+    method:'put',
+    headers: {
+      'Content-type': "application/json"
+    }
+  }).then((response)=> response.json()).then((data)=> console.log(data))
+}
 
 
   
