@@ -89,6 +89,30 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   favorite.setAttribute('alt', 'favorite button')
   favorite.setAttribute('type', 'button')
   favorite.innerHTML ='Favorite &#x2606'
+
+  //toggle favorite
+  favorite.onclick = toggle
+  let clicked = false;
+  //function to toggle between when the favorite button is clicked.
+  function toggle(event){
+    if(clicked === false){
+      favorite.style.backgroundColor= "red"
+      clicked =true;
+    }else{
+      favorite.style.backgroundColor= ""
+      clicked= false;
+    }
+  } 
+  function postData(url, data){
+    return fetch(url, {
+      method: POST,
+      body:JSON.stringify(data),
+      headers
+    });
+
+  }
+
+
   
 // END favourite  button
   const address = document.getElementById('restaurant-address');
