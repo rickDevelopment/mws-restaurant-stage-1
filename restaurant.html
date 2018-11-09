@@ -54,12 +54,12 @@
       </section>
     <!-- end restaurant -->
     <!-- Review form beginning-->
-    <form
+    <form id ="review_form"
     action="http://localhost:1337/reviews/" method="POST">
     <p>Required fields are followed by <abbr title="required">*</abbr>.</p>
       <div class="name-frm">
         <label for="name" >Name: <abbr title="required">*</abbr></label>
-        <input type="text" name="name" id="name" value="enter your name" name="user_name" autofocus="true">
+        <input type="text" name="name" id="name" value="enter your name" name="name" autofocus="true">
       </div>
       <div class="rating-frm">
         <fieldset>
@@ -89,10 +89,10 @@
       </div>
       <div class="comments-frm">
         <label for="comments">Comments: <abbr title="required">*</abbr></label>
-        <textarea name="user_comment" id="comments" >Add your comments here</textarea>
+        <textarea name="comments" id="comments" >Add your comments here</textarea>
       </div>
       <div class= "submit-btn">
-        <button type="submit">Submit</button>
+          <input  id ="submit-btn"type="submit" value="Send">
       </div>
     </form>
       <!-- Beginning reviews -->

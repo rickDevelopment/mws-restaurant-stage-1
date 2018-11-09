@@ -148,6 +148,17 @@ function setFav(url){
 }
 
 /**
+ * Submit review form
+ */
+let submitButton= document.getElementById('submit-btn');
+
+submitButton.onclick =submitReview
+
+function submitReview(){
+  alert('submit button was clicked');
+};
+
+/**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
