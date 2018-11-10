@@ -107,10 +107,15 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
       clicked= false;
     }
   } 
-  //url for favorite and unfavorite
+  /* 
+  *URL
+  */
 const favURL = `http://localhost:1337/restaurants/${self.restaurant.id}/?is_favorite=true`
 
 const unFavURL = `http://localhost:1337/restaurants/${self.restaurant.id}/?is_favorite=false`
+
+const reviewUrl = `http://localhost:1337/reviews/
+`
 
 //update the is_favorite key
 function setFav(url){
@@ -121,10 +126,39 @@ function setFav(url){
     }
   }).then((response)=> response.json()).then((data)=> console.log(data))
 }
+// END favourite  button
+
+/**
+ * Submit review form
+ */
+let submitButton= document.getElementById('submit-btn');
+
+submitButton.onclick =submitReview
+
+function submitReview(event){
+  event.preventDefault();
+  
+  let formData = new FormData();
+  formData.append('name', document.getElementById('name').value);
+  formData.append('rating', document.getElementsByClassName('rating-frm').value);
+  formData.append('comments',document.getElementById('comments').value);
+  formData.append('restaurant_id', `${self.restaurant.id}`)
+
+  let req = new Request (reviewUrl, {
+    method: 'post',
+    headers: {
+      'Accept': "application/json"
+    },
+    body: formData
+  });
+
+  fetch(req)
+  .then((response)=> response.json()).then((data)=> console.log(data))
+};
+
 
 
   
-// END favourite  button
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
@@ -147,16 +181,6 @@ function setFav(url){
   });
 }
 
-/**
- * Submit review form
- */
-let submitButton= document.getElementById('submit-btn');
-
-submitButton.onclick =submitReview
-
-function submitReview(){
-  alert('submit button was clicked');
-};
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
