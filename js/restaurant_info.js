@@ -140,14 +140,14 @@ function submitReview(event){
   
   let formData = new FormData();
   formData.append('name', document.getElementById('name').value);
-  formData.append('rating', document.getElementsByClassName('rating-frm').value);
+  formData.append('rating', document.getElementsByName('rating').value);
   formData.append('comments',document.getElementById('comments').value);
   formData.append('restaurant_id', `${self.restaurant.id}`)
 
   let req = new Request (reviewUrl, {
     method: 'post',
     headers: {
-      'Accept': "application/json"
+      'Accept': "application/json",
     },
     body: formData
   });
